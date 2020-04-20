@@ -4,8 +4,10 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
 import * as fb from 'firebase'
+import BuyModal from './components/Shared/BuyModal'
 
 Vue.config.productionTip = false
+Vue.component('app-buy-modal', BuyModal)
 
 new Vue({
   router,
@@ -28,6 +30,7 @@ new Vue({
         this.$store.dispatch('autoLoginUser', user)
       }
     })
+    this.$store.dispatch('fetchAds')
   }
 
 }).$mount('#app')

@@ -18,7 +18,7 @@
             dark
             flat
           >
-            <v-toolbar-title>Login</v-toolbar-title>
+            <v-toolbar-title>Войти</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
             <v-form

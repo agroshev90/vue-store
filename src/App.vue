@@ -42,7 +42,7 @@
           @click="drawer = !drawer"></v-app-bar-nav-icon>
 
           <v-toolbar-title>
-            <router-link to="/" tag="span" class="pointer">AD project</router-link>
+            <router-link to="/" tag="span" class="pointer">Доска объявлений</router-link>
           </v-toolbar-title>
 
           <v-spacer></v-spacer>
@@ -108,14 +108,14 @@ export default {
     links () {
       if (this.isUserLoggedIn) {
         return [
-          { title: 'Orders', icon: 'mdi-bookmark border', url: '/orders' },
-          { title: 'New ad', icon: 'mdi-note add', url: '/new' },
-          { title: 'My Ads', icon: 'mdi-filter-variant', url: '/list' }
+          { title: 'Заказы', icon: 'mdi-bookmark border', url: '/orders' },
+          { title: 'Новое объявление', icon: 'mdi-note add', url: '/new' },
+          { title: 'Мои объявления', icon: 'mdi-filter-variant', url: '/list' }
         ]
       }
       return [
-        { title: 'Login', icon: 'mdi-lock', url: '/login' },
-        { title: 'Registration', icon: 'mdi-face', url: '/registration' }
+        { title: 'Войти', icon: 'mdi-lock', url: '/login' },
+        { title: 'Регистрация', icon: 'mdi-face', url: '/registration' }
       ]
     }
   },

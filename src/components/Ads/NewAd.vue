@@ -11,7 +11,6 @@
           <v-text-field
             label="Название обьявления"
             name="title"
-            prepend-icon="mdi-account"
             type="text"
             v-model="title"
             required
@@ -21,29 +20,36 @@
           <v-textarea
             label="Описание"
             name="description"
-            prepend-icon="mdi-lock"
             type="text"
             class="mb-3"
             v-model="description"
             :rules="[v => !!v || 'Не заполнено описание']"
           />
         </v-form>
-        <v-layout row>
+        <v-layout row class="layoutmargin">
           <v-flex xs12>
             <v-btn
-              class="ma-2 white--text"
+              class="mb-6 white--text"
               color="blue-grey"
+              @click="triggerUpload"
             >Загрузить фотографию
               <v-icon right dark>mdi-cloud-upload</v-icon>
             </v-btn>
+            <input
+              ref="fileInput"
+              type="file"
+              style="display: none"
+              accept="image/*"
+              @change="onFileChange"
+            >
           </v-flex>
         </v-layout>
-        <v-layout row>
+        <v-layout row class="layoutmargin">
           <v-flex xs12>
-            <img src="">
+            <img :src="imageSrc" height="100" v-if="imageSrc">
           </v-flex>
         </v-layout>
-        <v-layout row class="mb-3">
+        <v-layout row class="mb-3 layoutmargin">
           <v-flex xs12>
             <v-switch
               v-model="promo"
@@ -51,11 +57,12 @@
             ></v-switch>
           </v-flex>
         </v-layout>
-        <v-layout row>
+        <v-layout row class="layoutmargin">
           <v-flex xs12>
             <v-spacer></v-spacer>
             <v-btn
-              :disabled="!valid"
+              :loading="loading"
+              :disabled="!valid || !image || loading"
               class="success"
               @click="createAd"
             >Разместить объявление
@@ -74,26 +81,51 @@ export default {
       title: '',
       description: '',
       promo: false,
-      valid: false
+      valid: false,
+      image: null,
+      imageSrc: ''
+    }
+  },
+  computed: {
+    loading () {
+      return this.$store.getters.loading
     }
   },
   methods: {
     createAd () {
-      if (this.$refs.form.validate()) {
+      if (this.$refs.form.validate() && this.image) {
         const ad = {
           title: this.title,
           description: this.description,
           promo: this.promo,
-          imageSrc: 'https://cdn-images-1.medium.com/max/850/1*nq9cdMxtdhQ0ZGL8OuSCUQ.jpeg'
+          image: this.image
         }
 
         this.$store.dispatch('createAd', ad)
+          .then(() => {
+            this.$router.push('/list')
+          })
+          .catch(() => {})
       }
+    },
+    triggerUpload () {
+      this.$refs.fileInput.click()
+    },
+    onFileChange (event) {
+      const file = event.target.files[0]
+      const reader = new FileReader()
+      reader.onload = e => {
+        this.imageSrc = reader.result
+      }
+      reader.readAsDataURL(file)
+      this.image = file
     }
   }
 }
 </script>
 
 <style scoped>
-
+ .layoutmargin {
+   margin: 0 !important;
+ }
 </style>
