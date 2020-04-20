@@ -1,5 +1,7 @@
 # Vue ad-project
 
+Посмотреть можно [здесь](https://ads-vue-f9897.web.app/).
+
 ## Project setup
 ```
 npm install
